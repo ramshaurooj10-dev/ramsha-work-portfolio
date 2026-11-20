@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, Bot, ArrowRight, ExternalLink, Mail, Linkedin, Volume2, Film, Mic, Megaphone, Smile, Layers } from 'lucide-react';
+import { X, Send, Bot, ArrowRight, Mail, Linkedin } from 'lucide-react';
+import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface PortfolioAssistantProps {
   onNavigateToSection: (sectionId: string) => void;
@@ -35,6 +36,7 @@ const QUICK_QUESTIONS = [
 export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNavigateToSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputQuery, setInputQuery] = useState('');
+  const [bottomOffset, setBottomOffset] = useState(24);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-1',
@@ -51,6 +53,28 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
       chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
+
+  // Dynamically lift the floating pill above the footer so it never overlaps footer text or links
+  useEffect(() => {
+    const updatePosition = () => {
+      const footer = document.getElementById('site-footer');
+      if (!footer) {
+        setBottomOffset(24);
+        return;
+      }
+      const rect = footer.getBoundingClientRect();
+      const visibleFooterHeight = Math.max(0, window.innerHeight - rect.top);
+      setBottomOffset(24 + visibleFooterHeight);
+    };
+
+    updatePosition();
+    window.addEventListener('scroll', updatePosition, { passive: true });
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, []);
 
   const handleSendQuery = (queryText: string) => {
     if (!queryText.trim()) return;
@@ -71,7 +95,6 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
     setMessages(newMessages);
     setInputQuery('');
 
-    // Generate response after small delay
     setTimeout(() => {
       const responseObj = generateBotResponse(queryText);
       setMessages((prev) => [
@@ -85,7 +108,7 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
           showLeadCta: responseObj.showLeadCta
         }
       ]);
-    }, 400);
+    }, 350);
   };
 
   const generateBotResponse = (query: string): {
@@ -95,7 +118,6 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
   } => {
     const q = query.toLowerCase();
 
-    // 1. What does Ramsha do / Services / Intro
     if (q.includes("what does ramsha do") || q.includes("services") || q.includes("overview") || q.includes("about ramsha")) {
       return {
         text: "Ramsha Shaikh is a professional Voice Over Artist, Dubbing Artist and AI Content Creator. She has 8+ years of voice-over experience and 3+ years of AI content creation experience. She works in Urdu, English and American English accent and can also coordinate multilingual dubbing projects through her professional team.",
@@ -107,156 +129,142 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
       };
     }
 
-    // 2. Voice-over services
     if (q.includes("voice-over services") || q.includes("voice over") || q.includes("vo services") || q.includes("voice services")) {
       return {
         text: "Ramsha offers pristine studio voice-over in Urdu, English, and American English accent. Her voice services cover commercial advertisements, corporate e-learning, documentary narration, IVR telephone systems, character voices, and educational content.",
         actionButtons: [
-          { label: "Listen to Voice Samples →", actionType: "navigate", target: "portfolio", icon: "mic" }
+          { label: "Listen to Voice Samples", actionType: "navigate", target: "portfolio", icon: "mic" }
         ],
         showLeadCta: true
       };
     }
 
-    // 3. American English Accent
     if (q.includes("american english") || q.includes("american accent") || q.includes("american")) {
       return {
         text: "Yes! Ramsha provides fluent English voice-over in a natural American English accent. You can listen to her American English documentary narration sample in the Voice Portfolio.",
         actionButtons: [
-          { label: "Listen to American Accent Demo →", actionType: "navigate", target: "portfolio", icon: "volume" }
+          { label: "Listen to American Accent Demo", actionType: "navigate", target: "portfolio", icon: "volume" }
         ],
         showLeadCta: true
       };
     }
 
-    // 4. Dubbing
     if (q.includes("dubbing") || q.includes("sync dubbing") || q.includes("lip sync")) {
       return {
         text: "Yes. Ramsha personally performs dubbing and can also coordinate professional multi-character and multilingual dubbing through her team. Her services include synchronized/lip-sync dubbing, movie/film dubbing, animation dubbing, and voice matching.",
         actionButtons: [
-          { label: "Explore Dubbing Work →", actionType: "navigate", target: "services", icon: "layers" }
+          { label: "Explore Dubbing Work", actionType: "navigate", target: "services", icon: "layers" }
         ],
         showLeadCta: true
       };
     }
 
-    // 5. Multilingual projects / team
     if (q.includes("multilingual") || q.includes("team") || q.includes("multiple languages") || q.includes("languages")) {
       return {
         text: "Ramsha leads a professional dubbing team capable of producing audio and video projects requiring multiple characters, accents, and languages while maintaining strict quality control.",
         actionButtons: [
-          { label: "View Team Production Details →", actionType: "navigate", target: "services", icon: "layers" }
+          { label: "View Team Production Details", actionType: "navigate", target: "services", icon: "layers" }
         ],
         showLeadCta: true
       };
     }
 
-    // 6. AI Content
-    if (q.includes("ai content") || q.includes("ai video") || q.includes("ai creation") || q.includes("ai movies") || q.includes("ai creation")) {
+    if (q.includes("ai content") || q.includes("ai video") || q.includes("ai creation") || q.includes("ai movies")) {
       return {
-        text: "Ramsha has 3+ years of AI content creation experience. Her work includes UGC, brand advertisements, AI movies, Hollywood-style cinematic videos, 3D product animation, cartoons, children's content, nursery rhymes, ASMR, food/viral content, AI influencer videos, 2D animation and more.",
+        text: "Ramsha has 3+ years of AI content creation experience. Her work includes UGC, brand advertisements, 3D product animation, claymation commercials, cartoons, children's content, nursery rhymes, ASMR, food/viral content, AI influencer videos, 2D animation and more.",
         actionButtons: [
-          { label: "Explore AI Portfolio →", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
+          { label: "Explore AI Portfolio", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
         ],
         showLeadCta: true
       };
     }
 
-    // 7. UGC & Ads
     if (q.includes("ugc") || q.includes("ads") || q.includes("advertisement") || q.includes("brand")) {
       return {
         text: "Yes. Ramsha creates AI-powered UGC-style and branded content for products, beauty brands, automotive commercials, and social media ad reels designed for high conversion.",
         actionButtons: [
-          { label: "View UGC & Ads Work →", actionType: "navigate", target: "brand-ugc", icon: "megaphone" }
+          { label: "View UGC & Ads Work", actionType: "navigate", target: "ai-portfolio", icon: "megaphone" }
         ],
         showLeadCta: true
       };
     }
 
-    // 8. Kids & Educational Content
     if (q.includes("kids") || q.includes("children") || q.includes("preschool") || q.includes("nursery") || q.includes("education") || q.includes("ece")) {
       return {
         text: "Yes! Ramsha has a background in Early Childhood Education (ECE) and creates children's and preschool content including nursery rhymes, educational stories, cartoons, learning videos, and character-based content in Urdu and English.",
         actionButtons: [
-          { label: "View Kids & Education Work →", actionType: "navigate", target: "kids-education", icon: "smile" }
+          { label: "View Kids & Education Work", actionType: "navigate", target: "kids-education", icon: "smile" }
         ],
         showLeadCta: true
       };
     }
 
-    // 9. Voice samples / Voice Portfolio
     if (q.includes("voice-over samples") || q.includes("voice samples") || q.includes("listen") || q.includes("audio samples")) {
       return {
         text: "You can listen to Ramsha's official studio samples directly in the Voice Portfolio, including United Nations Urdu VO, American English Documentary, Urdu Explainer, and Commercial spots.",
         actionButtons: [
-          { label: "View Voice Portfolio →", actionType: "navigate", target: "portfolio", icon: "mic" }
+          { label: "View Voice Portfolio", actionType: "navigate", target: "portfolio", icon: "mic" }
         ],
         showLeadCta: true
       };
     }
 
-    // 10. AI Content samples
     if (q.includes("ai samples") || q.includes("ai video samples") || q.includes("ai portfolio")) {
       return {
-        text: "Ramsha's AI Video Portfolio includes over 28 categorized video projects covering UGC, 3D Product Animations, AI Movies, Children's Animation, ASMR, and Food Reviews.",
+        text: "Ramsha's AI Video Portfolio includes dozens of categorized video projects covering UGC, 3D Product Animations, Claymation Commercials, Children's Animation, ASMR, and Food Ads.",
         actionButtons: [
-          { label: "Browse Full AI Portfolio →", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
+          { label: "Browse Full AI Portfolio", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
         ],
         showLeadCta: true
       };
     }
 
-    // 11. International Experience / Clients
     if (q.includes("who has she worked with") || q.includes("clients") || q.includes("un") || q.includes("unicef") || q.includes("experience") || q.includes("international")) {
       return {
         text: "Her voice-over and project experience includes work associated with organizations and clients such as the United Nations, UNICEF, Ministry of Defence Pakistan, Sunjok Organization Bangladesh, Voice of Australians Australia, Magna Vox UK, Big Mouth New Zealand, R&M Riyadh Saudi Arabia, MMG Global Vietnam and Pakistani government projects.",
         actionButtons: [
-          { label: "View Trusted Across Borders →", actionType: "navigate", target: "international", icon: "external" }
+          { label: "View Trusted Across Borders", actionType: "navigate", target: "experience", icon: "external" }
         ],
         showLeadCta: true
       };
     }
 
-    // 12. Studio & Equipment
     if (q.includes("studio") || q.includes("recording") || q.includes("mic") || q.includes("quality") || q.includes("hardware")) {
       return {
-        text: "Ramsha records in a professional, acoustically treated studio setup equipped with high-grade condenser microphones, pop filters, and 24-bit 96kHz audio interfaces to deliver broadcast-ready audio files.",
+        text: "Ramsha records in a professional, acoustically treated studio setup equipped with high-grade condenser microphones, pop filters, and 24-bit 48kHz audio chains to deliver broadcast-ready audio files.",
         actionButtons: [
-          { label: "View Studio Details →", actionType: "navigate", target: "studio", icon: "mic" }
+          { label: "View Studio Details", actionType: "navigate", target: "services", icon: "mic" }
         ],
         showLeadCta: true
       };
     }
 
-    // 13. Contact
     if (q.includes("contact") || q.includes("hire") || q.includes("email") || q.includes("reach") || q.includes("linkedin")) {
       return {
-        text: "You can contact Ramsha directly by email at ramshaurooj10@gmail.com or connect with her professionally on LinkedIn.",
+        text: `You can contact Ramsha directly by email at ${PERSONAL_INFO.email} or connect with her professionally on LinkedIn.`,
         actionButtons: [
-          { label: "Email Ramsha", actionType: "email", target: "ramshaurooj10@gmail.com", icon: "mail" },
-          { label: "LinkedIn Profile", actionType: "link", target: "https://www.linkedin.com/in/ramsha-urooj-3400381b2/", icon: "linkedin" }
+          { label: "Email Ramsha", actionType: "email", target: PERSONAL_INFO.email, icon: "mail" },
+          { label: "LinkedIn Profile", actionType: "link", target: PERSONAL_INFO.linkedin, icon: "linkedin" }
         ],
         showLeadCta: false
       };
     }
 
-    // 14. 3D Animation / Movies / ASMR specific keywords
     if (q.includes("3d") || q.includes("animation") || q.includes("asmr") || q.includes("movie") || q.includes("cinematic")) {
       return {
-        text: "Ramsha creates 3D product animations, cinematic AI movies with atmospheric sound design, ASMR audio-visual tracks, and 2D stick animations.",
+        text: "Ramsha creates 3D product animations, claymation commercials, ASMR audio-visual tracks, and 2D animations.",
         actionButtons: [
-          { label: "View AI Portfolio →", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
+          { label: "View AI Portfolio", actionType: "navigate", target: "ai-portfolio", icon: "sparkles" }
         ],
         showLeadCta: true
       };
     }
 
-    // Default Fallback (Rule Compliance: never invent info)
     return {
       text: "I don't have that exact detail in Ramsha's portfolio yet. You can contact her directly to ask about your specific project requirements!",
       actionButtons: [
-        { label: "Email Ramsha Directly", actionType: "email", target: "ramshaurooj10@gmail.com", icon: "mail" },
-        { label: "Connect on LinkedIn", actionType: "link", target: "https://www.linkedin.com/in/ramsha-urooj-3400381b2/", icon: "linkedin" }
+        { label: "Email Ramsha Directly", actionType: "email", target: PERSONAL_INFO.email, icon: "mail" },
+        { label: "Connect on LinkedIn", actionType: "link", target: PERSONAL_INFO.linkedin, icon: "linkedin" }
       ],
       showLeadCta: true
     };
@@ -265,7 +273,6 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
   const handleActionButtonClick = (btn: { actionType: string; target: string }) => {
     if (btn.actionType === 'navigate') {
       onNavigateToSection(btn.target);
-      // On mobile keep panel open or close depending on preference; let's close or keep open
     } else if (btn.actionType === 'email') {
       window.location.href = `mailto:${btn.target}`;
     } else if (btn.actionType === 'link') {
@@ -275,54 +282,52 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
 
   return (
     <>
-      {/* Floating Chat Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        {!isOpen && (
+      {/* Floating Chat Trigger — Dynamically lifts above footer so it never overlaps */}
+      {!isOpen && (
+        <div
+          className="fixed right-5 z-40 transition-[bottom] duration-150 ease-out"
+          style={{ bottom: `${bottomOffset}px` }}
+        >
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative flex items-center space-x-2.5 px-4 py-3 rounded-full bg-[#352820] hover:bg-[#271D17] text-white shadow-2xl shadow-[#352820]/40 border border-[#C5A46D]/40 transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group relative flex items-center space-x-2.5 px-4 py-2.5 rounded-full bg-[#161616] hover:bg-[#1E1E1E] text-[#FFFFFF] shadow-2xl shadow-black/70 border border-[#D4AF37]/60 hover:border-[#D4AF37] transition-all duration-200 hover:scale-[1.03] active:scale-95 cursor-pointer"
             title="Open Ramsha's Portfolio Assistant"
           >
-            <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C5A46D] opacity-75" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#C5A46D]" />
-            </span>
-
-            <div className="p-1.5 rounded-full bg-white/10 border border-[#C5A46D]/30">
-              <Bot className="w-5 h-5 text-[#C5A46D]" />
+            <div className="w-8 h-8 rounded-full bg-[#D4AF37] flex items-center justify-center shrink-0">
+              <Bot className="w-4 h-4 text-[#111111]" strokeWidth={2.5} />
             </div>
 
-            <div className="hidden sm:flex flex-col text-left">
-              <span className="text-xs font-bold leading-tight tracking-wide text-white">Portfolio Assistant</span>
-              <span className="text-[10px] text-[#C5A46D] font-medium">Ask questions & explore</span>
+            <div className="hidden sm:flex flex-col text-left pr-1">
+              <span className="text-xs font-bold leading-tight text-[#FFFFFF]">Portfolio Assistant</span>
+              <span className="text-[11px] text-[#D4AF37] font-semibold">Ask & explore</span>
             </div>
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Floating Chat Box Panel */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[92vw] sm:w-[420px] max-h-[85vh] h-[580px] rounded-3xl bg-white border border-[#E8DED0] shadow-2xl shadow-black/30 flex flex-col overflow-hidden backdrop-blur-2xl transition-all duration-300">
-          
+        <div className="fixed bottom-5 right-4 sm:right-6 z-50 w-[92vw] sm:w-[410px] max-h-[82vh] h-[560px] rounded-2xl bg-[#161616] border border-[#D4AF37]/45 shadow-2xl shadow-black/80 flex flex-col overflow-hidden">
+
           {/* Header */}
-          <div className="p-4 bg-[#352820] border-b border-[#352820] flex items-center justify-between">
+          <div className="p-4 bg-[#111111] border-b border-[#2A2A2A] flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-2xl bg-white/10 border border-[#C5A46D]/30 text-[#C5A46D]">
-                <Bot className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl bg-[#D4AF37] text-[#111111] flex items-center justify-center shrink-0">
+                <Bot className="w-5 h-5" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white tracking-wide">
+                <h3 className="text-sm font-bold text-[#FFFFFF] tracking-wide">
                   Ramsha's Portfolio Assistant
                 </h3>
-                <p className="text-[11px] text-[#C5A46D] font-medium">
-                  Ask about my services, experience or portfolio.
+                <p className="text-xs text-[#D4AF37] font-medium">
+                  Ask about services, experience or samples
                 </p>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors border border-white/10"
+              className="p-1.5 rounded-xl bg-[#1E1E1E] hover:bg-[#2A2A2A] text-[#D4D4D4] hover:text-[#FFFFFF] transition-colors border border-[#333333] cursor-pointer"
               title="Close chat"
             >
               <X className="w-4 h-4" />
@@ -330,62 +335,59 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#F6F1E8]/40">
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#121212]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
               >
-                {/* Message Bubble */}
                 <div
-                  className={`max-w-[88%] p-3.5 rounded-2xl text-xs leading-relaxed ${
+                  className={`max-w-[88%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                     msg.sender === 'user'
-                      ? 'bg-[#352820] text-white rounded-br-xs shadow-md'
-                      : 'bg-white border border-[#E8DED0] text-[#352820] rounded-bl-xs shadow-sm'
+                      ? 'bg-[#D4AF37] text-[#111111] font-semibold rounded-br-sm'
+                      : 'bg-[#1B1B1B] border border-[#2E2E2E] text-[#F0F0F0] rounded-bl-sm'
                   }`}
                 >
                   <p>{msg.text}</p>
 
-                  {/* Action Buttons inside Bot message */}
                   {msg.actionButtons && msg.actionButtons.length > 0 && (
-                    <div className="mt-3 pt-2.5 border-t border-[#E8DED0] flex flex-col space-y-1.5">
+                    <div className="mt-3 pt-2.5 border-t border-[#2E2E2E] flex flex-col space-y-1.5">
                       {msg.actionButtons.map((btn, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleActionButtonClick(btn)}
-                          className="w-full px-3 py-2 rounded-xl bg-[#F6F1E8] hover:bg-[#E8DED0] border border-[#E8DED0] text-[#352820] text-[11px] font-semibold transition-all flex items-center justify-between group"
+                          className="w-full px-3 py-2 rounded-xl bg-[#222222] hover:bg-[#2C2C2C] border border-[#D4AF37]/35 text-[#F5F5F5] text-xs font-semibold transition-all flex items-center justify-between group cursor-pointer"
                         >
                           <span>{btn.label}</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-[#C5A46D] group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37] group-hover:translate-x-0.5 transition-transform" />
                         </button>
                       ))}
                     </div>
                   )}
 
-                  {/* Gentle Lead CTA */}
                   {msg.showLeadCta && (
-                    <div className="mt-3 pt-2.5 border-t border-[#E8DED0]">
-                      <p className="text-[11px] font-semibold text-[#352820] mb-2">
+                    <div className="mt-3 pt-2.5 border-t border-[#2E2E2E]">
+                      <p className="text-xs font-semibold text-[#D4AF37] mb-2">
                         Would you like to discuss a project with Ramsha?
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         <button
-                          onClick={() => window.location.href = 'mailto:ramshaurooj10@gmail.com'}
-                          className="px-2.5 py-1 rounded-lg bg-[#352820] text-white hover:bg-[#271D17] text-[10px] font-bold transition-colors inline-flex items-center space-x-1"
+                          onClick={() => (window.location.href = `mailto:${PERSONAL_INFO.email}`)}
+                          className="px-2.5 py-1.5 rounded-lg bg-[#D4AF37] text-[#111111] hover:bg-[#C9A227] text-[11px] font-extrabold transition-colors inline-flex items-center space-x-1 cursor-pointer"
                         >
-                          <Mail className="w-3 h-3 text-[#C5A46D]" />
+                          <Mail className="w-3 h-3 text-[#111111]" />
                           <span>Email Ramsha</span>
                         </button>
                         <button
-                          onClick={() => window.open('https://www.linkedin.com/in/ramsha-urooj-3400381b2/', '_blank')}
-                          className="px-2.5 py-1 rounded-lg bg-[#F6F1E8] hover:bg-[#E8DED0] border border-[#E8DED0] text-[#352820] text-[10px] font-bold transition-colors inline-flex items-center space-x-1"
+                          onClick={() => window.open(PERSONAL_INFO.linkedin, '_blank', 'noopener,noreferrer')}
+                          className="px-2.5 py-1.5 rounded-lg bg-[#222222] hover:bg-[#2E2E2E] border border-[#3A3A3A] text-[#F5F5F5] text-[11px] font-bold transition-colors inline-flex items-center space-x-1 cursor-pointer"
                         >
-                          <Linkedin className="w-3 h-3 text-[#C5A46D]" />
+                          <Linkedin className="w-3 h-3 text-[#D4AF37]" />
                           <span>LinkedIn</span>
                         </button>
                         <button
                           onClick={() => onNavigateToSection('portfolio')}
-                          className="px-2.5 py-1 rounded-lg bg-[#C5A46D] hover:bg-[#b8955c] text-white text-[10px] font-bold transition-colors"
+                          className="px-2.5 py-1.5 rounded-lg bg-[#222222] hover:bg-[#2E2E2E] border border-[#D4AF37]/40 text-[#D4AF37] text-[11px] font-bold transition-colors cursor-pointer"
                         >
                           View Portfolio
                         </button>
@@ -394,7 +396,7 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
                   )}
                 </div>
 
-                <span className="text-[9px] text-[#352820]/50 font-mono mt-1 px-1">
+                <span className="text-[10px] text-[#9A9A9A] font-mono mt-1 px-1">
                   {msg.timestamp}
                 </span>
               </div>
@@ -404,15 +406,15 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
           </div>
 
           {/* Quick Questions Bar */}
-          <div className="p-2.5 bg-[#F6F1E8] border-t border-[#E8DED0] overflow-x-auto scrollbar-none flex space-x-2">
-            <span className="text-[10px] font-bold text-[#352820] uppercase tracking-wider flex-shrink-0 self-center pl-1 font-mono">
-              Quick Questions:
+          <div className="p-2.5 bg-[#161616] border-t border-[#2A2A2A] overflow-x-auto scrollbar-none flex space-x-2">
+            <span className="text-[11px] font-bold text-[#D4AF37] uppercase tracking-wider shrink-0 self-center pl-1 font-mono">
+              Quick:
             </span>
             {QUICK_QUESTIONS.map((qText, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSendQuery(qText)}
-                className="px-2.5 py-1 rounded-lg bg-white hover:bg-[#E8DED0] border border-[#E8DED0] text-[#352820] text-[11px] whitespace-nowrap transition-colors flex-shrink-0 font-medium"
+                className="px-3 py-1.5 rounded-lg bg-[#202020] hover:bg-[#2B2B2B] border border-[#333333] hover:border-[#D4AF37]/50 text-[#F0F0F0] text-xs whitespace-nowrap transition-colors shrink-0 font-medium cursor-pointer"
               >
                 {qText}
               </button>
@@ -425,22 +427,22 @@ export const PortfolioAssistant: React.FC<PortfolioAssistantProps> = ({ onNaviga
               e.preventDefault();
               handleSendQuery(inputQuery);
             }}
-            className="p-3 bg-white border-t border-[#E8DED0] flex items-center space-x-2"
+            className="p-3 bg-[#111111] border-t border-[#2A2A2A] flex items-center space-x-2"
           >
             <input
               type="text"
               placeholder="Type your question..."
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
-              className="flex-1 px-3.5 py-2 rounded-xl bg-[#F6F1E8] border border-[#E8DED0] text-xs text-[#352820] placeholder-[#352820]/40 focus:outline-none focus:border-[#C5A46D]"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#1A1A1A] border border-[#333333] text-xs sm:text-sm text-[#FFFFFF] placeholder-[#A8A8A8] focus:outline-none focus:border-[#D4AF37]"
             />
             <button
               type="submit"
               disabled={!inputQuery.trim()}
-              className="p-2 rounded-xl bg-[#352820] hover:bg-[#271D17] disabled:opacity-40 text-[#C5A46D] transition-colors shadow-sm"
+              className="p-2.5 rounded-xl bg-[#D4AF37] hover:bg-[#C9A227] disabled:opacity-40 text-[#111111] transition-colors cursor-pointer"
               title="Send question"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4" strokeWidth={2.5} />
             </button>
           </form>
 

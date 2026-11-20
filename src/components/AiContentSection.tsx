@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AI_FEATURED_TOP6, AI_SERVICE_CARDS, AI_PORTFOLIO_PROJECTS } from '../data/aiPortfolioData';
 import { Sparkles, Play, ExternalLink, ArrowRight, Camera, Megaphone, Film, Heart, Zap, CheckCircle2, Award, X } from 'lucide-react';
 import { AiContentProject } from '../types';
+import { AiProjectThumbnail } from './AiProjectThumbnail';
 
 interface AiContentSectionProps {
   onExploreFullPortfolio: () => void;
@@ -150,6 +151,13 @@ export const AiContentSection: React.FC<AiContentSectionProps> = ({ onExploreFul
                 className="bg-white rounded-2xl p-6 border border-[#E8DED0] hover:border-[#C5A46D] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden hover:-translate-y-1"
               >
                 <div>
+                  <AiProjectThumbnail
+                    driveLink={project.driveLink}
+                    title={project.title}
+                    showBadges={false}
+                    className="h-44 w-full rounded-xl mb-4 border border-[#262626]"
+                  />
+
                   <div className="flex items-start justify-between gap-2">
                     <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#F6F1E8] text-[#352820] border border-[#E8DED0]">
                       {project.category}

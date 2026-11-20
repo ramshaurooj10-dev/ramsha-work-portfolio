@@ -29,7 +29,7 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Character Dubbing',
     language: 'Urdu',
     type: "Character / Children's Dubbing",
-    description: 'Expressive Urdu voice sync and character dubbing for baby and children roles.',
+    description: 'High-pitched, playful Urdu infant and toddler voice acting matched to animated expressions.',
     driveLink: 'https://drive.google.com/file/d/1WYs8YPv4Iim77Eu_tEi31aIbt1mWIGRf/view?usp=drive_link',
     isFeatured: true
   },
@@ -39,7 +39,7 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Character Dubbing',
     language: 'Urdu',
     type: 'Character / Fantasy Dubbing',
-    description: 'Fantasy character dubbing in Urdu with synchronized dialogue timing and emotional nuance.',
+    description: 'Lyrical Urdu fantasy dubbing capturing underwater wonder, breath timing, and emotional warmth.',
     driveLink: 'https://drive.google.com/file/d/1vJK-JgBf10O3wq3Trxapx5EentOa_81A/view?usp=drive_link',
     isFeatured: true
   },
@@ -49,45 +49,36 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Drama',
     language: 'Urdu',
     type: 'Drama Dubbing',
-    description: 'Lip-synced Urdu dubbing performance for international drama series localization.',
+    description: 'Frame-accurate lip-synced Urdu dialogue adaptation for serialized East Asian television drama.',
     driveLink: 'https://drive.google.com/file/d/1EX9HT6JOjQxX_kZIEf6iU0TOknJCmBxv/view?usp=drive_link',
     isFeatured: true
   },
   {
-    id: 'dubbing-halima-urdu',
-    title: 'Halima Dubbing',
-    category: 'Drama',
-    language: 'Urdu',
-    type: 'Drama / Character Dubbing',
-    description: 'Dramatic Urdu voice performance for historical and period drama character acting.',
-    driveLink: 'https://drive.google.com/file/d/1ukfkMew7h5AfWqckR73-5wvQoeRYwTiV/view?usp=drive_link'
-  },
-  {
     id: 'dubbing-ertugrul-urdu',
-    title: 'Halima / Ertugul Dubbing',
+    title: 'Halima / Ertugrul — Historical Drama Dubbing',
     category: 'Drama',
     language: 'Urdu',
     type: 'Historical Drama Dubbing',
-    description: 'Synchronized Urdu dialogue dubbing for epic historical drama productions.',
+    description: 'Poised, dramatic Urdu period performance synchronized to Turkish historical series dialogue.',
     driveLink: 'https://drive.google.com/file/d/1ukfkMew7h5AfWqckR73-5wvQoeRYwTiV/view?usp=drive_link'
   },
   {
     id: 'dubbing-movie-urdu',
-    title: 'Movie Dubbing',
+    title: 'Feature Movie Dubbing',
     category: 'Movie',
     language: 'Urdu',
     type: 'Movie Dubbing',
-    description: 'Full feature film character voice dubbing with broadcast-standard audio mix and syncing.',
+    description: 'Cinema-grade Urdu lead character dubbing mixed for seamless theatrical lip-sync immersion.',
     driveLink: 'https://drive.google.com/file/d/1vBWir-ZzlV7PL7f1zoRk3s-KUXSeqC_s/view?usp=drive_link',
     isFeatured: true
   },
   {
     id: 'dubbing-cartoon-1-urdu',
-    title: 'Cartoon Dubbing',
+    title: 'Cartoon Dubbing — Sample 01',
     category: 'Cartoon',
     language: 'Urdu',
     type: 'Cartoon Dubbing',
-    description: 'Animated cartoon character voice performance with playful pitch and rhythm.',
+    description: 'Energetic Urdu cartoon character acting driven by crisp comedic timing and pitch shifts.',
     driveLink: 'https://drive.google.com/file/d/1u4e38JLwF76jN2YZQhAOEnzcXAZr3RdC/view?usp=drive_link'
   },
   {
@@ -96,16 +87,16 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Cartoon',
     language: 'Urdu',
     type: 'Cartoon Dubbing',
-    description: 'Character voice dubbing for animated television series in Urdu.',
+    description: 'Vibrant animated television episode dubbing featuring nimble multi-beat Urdu reactions.',
     driveLink: 'https://drive.google.com/file/d/1WifMV-toxgSBAVZQMcHEu_mo4rnBOf8k/view?usp=drive_link'
   },
   {
     id: 'dubbing-drama-2-urdu',
-    title: 'Drama Dubbing',
+    title: 'Television Drama Dubbing',
     category: 'Drama',
     language: 'Urdu',
     type: 'Drama Dubbing',
-    description: 'Professional emotional dubbing performance for television drama broadcast.',
+    description: 'Intense dramatic Urdu dialogue sync crafted for prime-time serial television localization.',
     driveLink: 'https://drive.google.com/file/d/1pyiNi0L2YzgOxOrKKhUgVG4oBurW6xlm/view?usp=drive_link'
   },
   {
@@ -114,7 +105,7 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Cartoon',
     language: 'Urdu',
     type: 'Cartoon Movie Dubbing',
-    description: 'Urdu animated feature film dubbing demonstration with lip-sync precision.',
+    description: 'Expressive Urdu feature-animation dubbing balancing sparkling humor with precise lip-sync.',
     driveLink: 'https://drive.google.com/file/d/1H2oyZZ1Tv3scSgXHBOQznhrA59Rm8cIh/view?usp=drive_link',
     isFeatured: true
   },
@@ -122,21 +113,21 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
   // --- ENGLISH DUBBING ---
   {
     id: 'dubbing-english-sample-1',
-    title: 'English Dubbing Sample 01',
+    title: 'English Dubbing — Sample 01',
     category: 'English Dubbing',
     language: 'English',
     type: 'English Dubbing',
-    description: 'Professional English sync dubbing for video, character, and commercial media.',
+    description: 'Natural English lip-sync localization for international video and commercial character scenes.',
     driveLink: 'https://drive.google.com/file/d/1vKOO5MfJsVYbBxuSX09soUYmAqqY60NA/view?usp=drive_link',
     isFeatured: true
   },
   {
     id: 'dubbing-english-sample-2',
-    title: 'English Dubbing Sample 02',
+    title: 'English Dubbing — Sample 02',
     category: 'English Dubbing',
     language: 'English',
     type: 'English Dubbing',
-    description: 'Natural English dialogue dubbing sample with clean diction and pacing.',
+    description: 'Conversational English scene dubbing with crisp articulation and matched emotional beats.',
     driveLink: 'https://drive.google.com/file/d/1dhJG_XRSlwXTjJwwl9pRuPnUsbMTzssJ/view?usp=drive_link'
   },
   {
@@ -145,7 +136,7 @@ export const DUBBING_PROJECTS: DubbingProject[] = [
     category: 'Cartoon',
     language: 'English',
     type: 'English Cartoon Dubbing',
-    description: 'Character animated cartoon dubbing sample in English.',
+    description: 'Bright animated character voice acting in English tailored for children’s entertainment.',
     driveLink: 'https://drive.google.com/file/d/1dhECA8nGvoFf4ErTyHpyOnnaueW5CDdj/view?usp=drive_link'
   }
 ];

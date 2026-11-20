@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AI_PORTFOLIO_PROJECTS, AI_PORTFOLIO_CATEGORIES } from '../data/aiPortfolioData';
 import { AiContentProject } from '../types';
 import { Sparkles, Filter, ExternalLink, Play, Film, Video, Megaphone, Smile, Search, X, Camera } from 'lucide-react';
+import { AiProjectThumbnail } from './AiProjectThumbnail';
 
 export const AiPortfolioShowcase: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
@@ -139,6 +140,14 @@ export const AiPortfolioShowcase: React.FC = () => {
                 className="bg-white rounded-2xl p-6 border border-[#E8DED0] hover:border-[#C5A46D] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
               >
                 <div>
+                  {/* Drive Video Thumbnail */}
+                  <AiProjectThumbnail
+                    driveLink={project.driveLink}
+                    title={project.title}
+                    showBadges={false}
+                    className="h-44 w-full rounded-xl mb-4 border border-[#262626]"
+                  />
+
                   {/* Header Badge */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center space-x-2">

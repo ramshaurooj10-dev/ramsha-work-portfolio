@@ -1,34 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-warm-cream: #F6F1E8;
-  --color-espresso: #352820;
-  --color-espresso-dark: #271D17;
-  --color-espresso-muted: #5C4A3E;
-  --color-espresso-subtle: #7A695E;
-  --color-champagne: #C5A46D;
-  --color-champagne-light: #DFC9A2;
-  --color-champagne-dark: #A1814B;
-  --color-soft-beige: #E8DED0;
-  --color-soft-beige-light: #F4EFE6;
-  --color-soft-beige-dark: #D4C6B4;
-  --color-pure-white: #FFFFFF;
-  --color-vibrant-amber: #D97706;
-  --color-vibrant-gold: #E5A93C;
-  --color-vibrant-coral: #E05A3A;
-  --color-vibrant-emerald: #059669;
-  --color-vibrant-sapphire: #2563EB;
-  --color-vibrant-purple: #7C3AED;
+  --color-obsidian: #111111;
+  --color-charcoal: #161616;
+  --color-surface: #1A1A1A;
+  --color-surface-elevated: #222222;
+  --color-border-dark: #2C2C2C;
+  --color-gold: #D4AF37;
+  --color-gold-deep: #C9A227;
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #D4D4D4;
+  --color-text-muted: #A8A8A8;
 }
 
 @layer base {
   body {
-    background-color: #F6F1E8;
-    color: #352820;
+    background-color: #111111;
+    color: #F5F5F5;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background-color: #C5A46D;
-    color: #352820;
+    background-color: #D4AF37;
+    color: #111111;
   }
 }

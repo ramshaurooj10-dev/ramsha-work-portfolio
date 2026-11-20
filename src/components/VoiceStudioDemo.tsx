@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mic, Sparkles, CheckCircle, ExternalLink } from 'lucide-react';
+import { Mic, CheckCircle, ExternalLink } from 'lucide-react';
 
 export const VoiceStudioDemo: React.FC = () => {
   const voiceStyles = [
@@ -44,30 +44,30 @@ export const VoiceStudioDemo: React.FC = () => {
   const [activeStyle, setActiveStyle] = useState(voiceStyles[0]);
 
   return (
-    <section id="voice-audition" className="py-20 bg-[#F6F1E8] relative border-y border-[#E8DED0]">
+    <section id="voice-audition" className="py-20 bg-[#141414] relative border-y border-[#262626]">
       <div id="voice-studio" className="relative -top-24 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#E8DED0] text-[#352820] text-xs font-bold uppercase tracking-wider shadow-sm">
-            <Mic className="w-3.5 h-3.5 text-[#C5A46D]" />
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#1C1C1C] border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
+            <Mic className="w-3.5 h-3.5 text-[#D4AF37]" strokeWidth={2.25} />
             <span>Interactive Voice Studio</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#352820] tracking-tight font-sans">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FFFFFF] tracking-tight font-sans">
             Test Ramsha's Voice Styles
           </h2>
-          <p className="text-[#5C4A3E] text-sm sm:text-base font-light">
+          <p className="text-[#D4D4D4] text-sm sm:text-base font-normal">
             Select a vocal style below to preview Ramsha's accent, tone, and script delivery.
           </p>
         </div>
 
         {/* Interactive Studio Console */}
-        <div className="mt-12 grid lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl p-6 sm:p-8 border border-[#E8DED0] shadow-xl">
-          
+        <div className="mt-12 grid lg:grid-cols-12 gap-8 items-center bg-[#181818] rounded-2xl p-6 sm:p-8 border border-[#2C2C2C] shadow-2xl">
+
           {/* Left Column: Style Selection Buttons */}
           <div className="lg:col-span-5 space-y-3">
-            <span className="text-xs font-bold text-[#A1814B] uppercase tracking-widest font-mono block mb-2">
+            <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-widest font-mono block mb-2">
               Select Audition Style:
             </span>
             {voiceStyles.map((style) => {
@@ -76,57 +76,57 @@ export const VoiceStudioDemo: React.FC = () => {
                 <button
                   key={style.id}
                   onClick={() => setActiveStyle(style)}
-                  className={`w-full p-4 rounded-xl border text-left transition-all flex items-center justify-between ${
+                  className={`w-full p-4 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-[#F6F1E8] border-[#C5A46D] text-[#352820] shadow-sm'
-                      : 'bg-white border-[#E8DED0] text-[#5C4A3E] hover:border-[#C5A46D] hover:text-[#352820]'
+                      ? 'bg-[#222222] border-[#D4AF37] text-[#FFFFFF] shadow-md shadow-[#D4AF37]/10'
+                      : 'bg-[#141414] border-[#2C2C2C] text-[#D4D4D4] hover:border-[#D4AF37]/60 hover:text-[#FFFFFF]'
                   }`}
                 >
                   <div>
-                    <h3 className="text-sm font-bold text-[#352820]">{style.title}</h3>
-                    <p className="text-[11px] text-[#A1814B] mt-0.5">{style.language} • {style.accent}</p>
+                    <h3 className="text-sm font-bold text-[#FFFFFF]">{style.title}</h3>
+                    <p className="text-xs text-[#D4AF37] font-medium mt-0.5">{style.language} • {style.accent}</p>
                   </div>
-                  {isSelected && <CheckCircle className="w-5 h-5 text-[#C5A46D] flex-shrink-0" />}
+                  {isSelected && <CheckCircle className="w-5 h-5 text-[#D4AF37] shrink-0" strokeWidth={2.25} />}
                 </button>
               );
             })}
           </div>
 
           {/* Right Column: Audio Console & Script Reader */}
-          <div className="lg:col-span-7 bg-[#F6F1E8] p-6 rounded-xl border border-[#E8DED0] space-y-5">
-            <div className="flex items-center justify-between border-b border-[#E8DED0] pb-3">
+          <div className="lg:col-span-7 bg-[#121212] p-6 rounded-xl border border-[#2C2C2C] space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#2A2A2A] pb-3.5">
               <div>
-                <span className="text-xs font-bold text-[#A1814B] uppercase font-mono">Audition Console</span>
-                <h4 className="text-lg font-bold text-[#352820]">{activeStyle.title}</h4>
+                <span className="text-xs font-bold text-[#D4AF37] uppercase font-mono">Audition Console</span>
+                <h4 className="text-lg font-bold text-[#FFFFFF] mt-0.5">{activeStyle.title}</h4>
               </div>
-              <span className="text-xs font-mono text-[#352820] bg-white px-2.5 py-1 rounded border border-[#E8DED0]">
+              <span className="text-xs font-mono font-semibold text-[#F5F5F5] bg-[#1E1E1E] px-3 py-1 rounded-lg border border-[#D4AF37]/30">
                 {activeStyle.tone}
               </span>
             </div>
 
             {/* Script Display */}
-            <div className="p-4 rounded-xl bg-white border border-[#E8DED0] space-y-1">
-              <span className="text-[10px] font-mono font-bold text-[#7A695E] uppercase block">Sample Script Snippet:</span>
-              <p className="text-sm text-[#352820] italic font-serif leading-relaxed">
+            <div className="p-4 rounded-xl bg-[#1A1A1A] border border-[#2C2C2C] space-y-1.5">
+              <span className="text-xs font-mono font-bold text-[#D4AF37] uppercase block">Sample Script Snippet:</span>
+              <p className="text-sm sm:text-base text-[#F5F5F5] italic font-serif leading-relaxed">
                 "{activeStyle.sampleScript}"
               </p>
             </div>
 
             {/* External Sample Link Button */}
-            <div className="p-4 rounded-xl bg-white border border-[#E8DED0] flex items-center justify-between gap-4">
+            <div className="p-4 rounded-xl bg-[#1A1A1A] border border-[#2C2C2C] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="text-xs font-bold text-[#352820] block">Google Drive Audio Sample</span>
-                <p className="text-[11px] text-[#5C4A3E]">Pristine studio recording in HD</p>
+                <span className="text-sm font-bold text-[#FFFFFF] block">Google Drive Audio Sample</span>
+                <p className="text-xs text-[#C8C8C8] mt-0.5">Pristine studio recording in HD</p>
               </div>
 
               <a
                 href={activeStyle.driveLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#352820] hover:bg-[#271D17] transition-all shadow-md shadow-[#352820]/20 flex items-center space-x-1.5 flex-shrink-0 group border border-[#C5A46D]/40"
+                className="px-5 py-2.5 rounded-xl text-xs font-extrabold text-[#111111] bg-[#D4AF37] hover:bg-[#C9A227] transition-all shadow-md shadow-[#D4AF37]/20 flex items-center justify-center space-x-1.5 shrink-0 group"
               >
-                <span>Listen to Sample ↗</span>
-                <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <span>Listen to Sample</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[#111111] group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
               </a>
             </div>
 

@@ -73,7 +73,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F1E8] text-[#352820] font-sans selection:bg-[#C5A46D] selection:text-[#352820]">
+    <div className="min-h-screen bg-[#111111] text-[#F5F5F5] font-sans selection:bg-[#D4AF37] selection:text-[#111111]">
       {/* Sticky Header Navigation */}
       <Navbar
         onHireClick={handleHireClick}

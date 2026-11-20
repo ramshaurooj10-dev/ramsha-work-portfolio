@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sliders, CheckCircle2, Send, Sparkles, HelpCircle } from 'lucide-react';
+import { Sliders, CheckCircle2, Send, Sparkles } from 'lucide-react';
 
 interface ProjectCalculatorProps {
   onHireClickWithData: (service: string, est: string) => void;
@@ -13,7 +13,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
   const [needTeamDubbing, setNeedTeamDubbing] = useState(false);
 
   const calculateEstimate = () => {
-    let estDurationMin = Math.max(1, Math.round(wordCount / 130));
+    const estDurationMin = Math.max(1, Math.round(wordCount / 130));
     let baseComplexity = 'Standard Production';
 
     if (needTeamDubbing || serviceType === 'Dubbing') {
@@ -31,34 +31,34 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
   const { estDurationMin, baseComplexity } = calculateEstimate();
 
   return (
-    <section className="py-20 bg-[#F6F1E8] relative border-t border-[#E8DED0]">
+    <section className="py-20 bg-[#111111] relative border-t border-[#262626]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <div className="grid lg:grid-cols-12 gap-10 items-center">
-          
+
           {/* Left Column: Estimator Controls */}
-          <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 border border-[#E8DED0] shadow-xl space-y-6">
-            <div className="flex items-center space-x-2 text-[#A1814B] text-xs font-bold uppercase tracking-wider">
-              <Sliders className="w-4 h-4 text-[#C5A46D]" />
+          <div className="lg:col-span-7 bg-[#181818] rounded-2xl p-6 sm:p-8 border border-[#2C2C2C] shadow-2xl space-y-6">
+            <div className="flex items-center space-x-2 text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
+              <Sliders className="w-4 h-4 text-[#D4AF37]" strokeWidth={2.25} />
               <span>Project Estimator & Inquiry Calculator</span>
             </div>
 
-            <h3 className="text-2xl font-bold text-[#352820]">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF]">
               Estimate Your Production Requirements
             </h3>
 
             {/* Service Type Selection */}
             <div>
-              <label className="text-xs font-bold text-[#352820] block mb-2">1. Select Service Type:</label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <label className="text-xs sm:text-sm font-bold text-[#F5F5F5] block mb-2.5">1. Select Service Type:</label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {['Voice Over', 'Dubbing', 'AI Content', 'Kids & Preschool'].map((st) => (
                   <button
                     key={st}
                     onClick={() => setServiceType(st)}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
+                    className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                       serviceType === st
-                        ? 'bg-[#352820] text-white border-[#C5A46D] shadow-sm'
-                        : 'bg-[#F6F1E8] text-[#352820] border-[#E8DED0] hover:border-[#C5A46D]'
+                        ? 'bg-[#D4AF37] text-[#111111] border-[#D4AF37] shadow-md shadow-[#D4AF37]/20'
+                        : 'bg-[#141414] text-[#E0E0E0] border-[#2E2E2E] hover:border-[#D4AF37]/60 hover:text-[#FFFFFF]'
                     }`}
                   >
                     {st}
@@ -69,16 +69,16 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
 
             {/* Language Selection */}
             <div>
-              <label className="text-xs font-bold text-[#352820] block mb-2">2. Language / Accent Required:</label>
-              <div className="grid grid-cols-3 gap-2">
+              <label className="text-xs sm:text-sm font-bold text-[#F5F5F5] block mb-2.5">2. Language / Accent Required:</label>
+              <div className="grid grid-cols-3 gap-2.5">
                 {['Urdu', 'English', 'American Accent'].map((lang) => (
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
+                    className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                       language === lang
-                        ? 'bg-[#E8DED0] text-[#352820] border-[#C5A46D] font-bold'
-                        : 'bg-[#F6F1E8] text-[#5C4A3E] border-[#E8DED0]'
+                        ? 'bg-[#262114] text-[#D4AF37] border-[#D4AF37]'
+                        : 'bg-[#141414] text-[#D4D4D4] border-[#2E2E2E] hover:border-[#D4AF37]/50 hover:text-[#FFFFFF]'
                     }`}
                   >
                     {lang}
@@ -89,9 +89,11 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
 
             {/* Word Count Slider */}
             <div>
-              <div className="flex justify-between items-center text-xs font-bold text-[#352820] mb-2">
+              <div className="flex flex-wrap justify-between items-center gap-2 text-xs sm:text-sm font-bold text-[#F5F5F5] mb-2.5">
                 <span>3. Estimated Word Count:</span>
-                <span className="text-[#A1814B] font-mono">{wordCount} words (~{estDurationMin} min finished audio)</span>
+                <span className="text-[#D4AF37] font-mono tabular-nums">
+                  {`${wordCount.toLocaleString()} words (~${estDurationMin} min finished audio)`}
+                </span>
               </div>
               <input
                 type="range"
@@ -99,10 +101,10 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
                 max="2500"
                 step="50"
                 value={wordCount}
-                onChange={(e) => setWordCount(parseInt(e.target.value))}
-                className="w-full accent-[#C5A46D] bg-[#E8DED0] rounded-lg cursor-pointer h-2"
+                onChange={(e) => setWordCount(parseInt(e.target.value, 10))}
+                className="w-full accent-[#D4AF37] bg-[#2C2C2C] rounded-lg cursor-pointer h-2"
               />
-              <div className="flex justify-between text-[10px] text-[#7A695E] font-mono mt-1">
+              <div className="flex justify-between text-xs text-[#B8B8B8] font-mono mt-2">
                 <span>50 words (Commercial)</span>
                 <span>1,000 words (E-Learning)</span>
                 <span>2,500 words (Documentary)</span>
@@ -110,15 +112,15 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
             </div>
 
             {/* Add-on Toggles */}
-            <div className="space-y-2 pt-2 border-t border-[#E8DED0]">
+            <div className="space-y-3 pt-4 border-t border-[#262626]">
               <label className="flex items-center space-x-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={needAI}
                   onChange={(e) => setNeedAI(e.target.checked)}
-                  className="rounded accent-[#C5A46D] w-4 h-4 bg-white border-[#E8DED0]"
+                  className="rounded accent-[#D4AF37] w-4 h-4 bg-[#141414] border-[#3A3A3A]"
                 />
-                <span className="text-xs text-[#5C4A3E]">Include AI-Generated Video / Animation</span>
+                <span className="text-xs sm:text-sm text-[#E0E0E0] font-medium">Include AI-Generated Video / Animation</span>
               </label>
 
               <label className="flex items-center space-x-3 cursor-pointer">
@@ -126,43 +128,43 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
                   type="checkbox"
                   checked={needTeamDubbing}
                   onChange={(e) => setNeedTeamDubbing(e.target.checked)}
-                  className="rounded accent-[#C5A46D] w-4 h-4 bg-white border-[#E8DED0]"
+                  className="rounded accent-[#D4AF37] w-4 h-4 bg-[#141414] border-[#3A3A3A]"
                 />
-                <span className="text-xs text-[#5C4A3E]">Require Full Dubbing Team (Multi-character casting)</span>
+                <span className="text-xs sm:text-sm text-[#E0E0E0] font-medium">Require Full Dubbing Team (Multi-character casting)</span>
               </label>
             </div>
 
           </div>
 
           {/* Right Column: Calculated Recommendation Summary */}
-          <div className="lg:col-span-5 bg-white rounded-2xl p-6 sm:p-8 border border-[#E8DED0] shadow-xl space-y-5">
-            <div className="flex items-center space-x-2 text-[#A1814B] text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-4 h-4 text-[#C5A46D]" />
+          <div className="lg:col-span-5 bg-[#181818] rounded-2xl p-6 sm:p-8 border border-[#D4AF37]/35 shadow-2xl space-y-5">
+            <div className="flex items-center space-x-2 text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-4 h-4 text-[#D4AF37]" strokeWidth={2.25} />
               <span>Recommended Production Package</span>
             </div>
 
-            <div className="space-y-3">
-              <div className="p-4 rounded-xl bg-[#F6F1E8] border border-[#E8DED0] space-y-2">
-                <div className="text-xs text-[#5C4A3E]">Selected Scope:</div>
-                <div className="text-lg font-bold text-[#352820]">
+            <div className="space-y-4">
+              <div className="p-5 rounded-xl bg-[#121212] border border-[#2C2C2C] space-y-2">
+                <div className="text-xs font-semibold text-[#B8B8B8] uppercase tracking-wider">Selected Scope:</div>
+                <div className="text-xl font-bold text-[#FFFFFF]">
                   {serviceType} ({language})
                 </div>
-                <div className="text-xs text-[#A1814B] font-mono">
-                  {baseComplexity} • Approx {estDurationMin} Min Finished Output
+                <div className="text-xs sm:text-sm text-[#D4AF37] font-mono font-semibold">
+                  {`${baseComplexity} • Approx. ${estDurationMin} Min Finished Output`}
                 </div>
               </div>
 
-              <div className="space-y-2 text-xs text-[#5C4A3E] pt-2">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A46D]" />
+              <div className="space-y-3 text-xs sm:text-sm text-[#E0E0E0] pt-1">
+                <div className="flex items-center space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" strokeWidth={2.25} />
                   <span>24-bit Studio WAV Audio Master included</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A46D]" />
-                  <span>Prompt delivery with revisions</span>
+                <div className="flex items-center space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" strokeWidth={2.25} />
+                  <span>Fast turnaround with complimentary revisions</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A46D]" />
+                <div className="flex items-center space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" strokeWidth={2.25} />
                   <span>Broadcast & Commercial usage rights available</span>
                 </div>
               </div>
@@ -170,9 +172,9 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onHireClic
 
             <button
               onClick={() => onHireClickWithData(serviceType, `${wordCount} words (${language})`)}
-              className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-[#352820] hover:bg-[#271D17] shadow-lg shadow-[#352820]/20 transition-all flex items-center justify-center space-x-2 border border-[#C5A46D]/40"
+              className="w-full py-3.5 px-5 rounded-xl font-extrabold text-xs sm:text-sm text-[#111111] bg-[#D4AF37] hover:bg-[#C9A227] shadow-lg shadow-[#D4AF37]/20 transition-all flex items-center justify-center space-x-2 cursor-pointer"
             >
-              <Send className="w-4 h-4 text-[#C5A46D]" />
+              <Send className="w-4 h-4 text-[#111111]" strokeWidth={2.5} />
               <span>Send Inquiry For This Estimate</span>
             </button>
           </div>
